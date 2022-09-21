@@ -39,6 +39,8 @@ public class GoodfoodApplication {
 			userService.saveUser(new User(null,"Vinh Phuc","pucnoob","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
 			userService.saveUser(new User(null,"David","David","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
 			userService.saveUser(new User(null,"Ronaldo","Ronaldo","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
+
+			userService.addRoleToUser("pucnoob","ROLE_ADMIN");
 		};
 	}
 
