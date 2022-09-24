@@ -62,16 +62,31 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .withIssuer(request.getRequestURI().toString())
                 .sign(algorithm);
 
-        // send to font end to do something
-        /*response.setHeader("access_token",access_token);
-        response.setHeader("refresh_token",refresh_token);*/
-
-        Map<String,String> tokens = new HashMap<>();
+        Map<String,Object> tokens =new HashMap<>();
         tokens.put("access_token",access_token);
         tokens.put("refresh_token",refresh_token);
+
+        Map<String,Object> apiResponse = new HashMap<>();
+        apiResponse.put("status",response.getStatus());
+        apiResponse.put("message","Login Success");
+        apiResponse.put("data",tokens);
         response.setContentType(APPLICATION_JSON_VALUE);
 
         // sent tokens to the body
-        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+        new ObjectMapper().writeValue(response.getOutputStream(),apiResponse);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        Map<String,Object> tokens =new HashMap<>();
+
+        Map<String,Object> apiResponse = new HashMap<>();
+        apiResponse.put("status",response.getStatus());
+        apiResponse.put("message","Login Fail");
+        apiResponse.put("data",tokens);
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        // sent tokens to the body
+        new ObjectMapper().writeValue(response.getOutputStream(),apiResponse);
     }
 }
