@@ -9,20 +9,58 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @SpringBootApplication
+@RestController
 public class GoodfoodApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(GoodfoodApplication.class, args);
 	}
 
+	@GetMapping("/hello")
+
+	public String hello(HttpServletRequest request)
+	{
+		System.out.println(request.getParameter("username"));
+
+		return "hello";
+	}
+	@PostMapping("/hello")
+	@CrossOrigin(value = "http://localhost:3000")
+	public void getheloo(HttpServletRequest request)
+	{
+		System.out.println(request.getParameter("username"));
+		System.out.println(request.getParameter("password"));
+	}
 	// create bean for password encoder
 	@Bean
 	PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
+	}
+
+	@Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/hello").allowedOrigins("http://localhost:3000");
+			}
+		};
 	}
 
 	@Bean

@@ -26,12 +26,13 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/api")
+//@RequestMapping("/api")
+@CrossOrigin(value = "http://localhost:3000")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    @GetMapping("/users")
+    @GetMapping("/api/users")
     public ResponseEntity<List<User>> getUsers() {
         return ResponseEntity.ok().body(userService.getUsers());
     }

@@ -74,4 +74,15 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         // sent tokens to the body
         new ObjectMapper().writeValue(response.getOutputStream(),tokens);
     }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        Map<String,String> tokens = new HashMap<>();
+        tokens.put("access_token","login fail");
+        tokens.put("refresh_token","refresh_token");
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        // sent tokens to the body
+        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
+    }
 }
