@@ -26,15 +26,20 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-//@RequestMapping("/api")
-@CrossOrigin(value = "http://localhost:3000")
+@RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-    @GetMapping("/api/users")
-    public ResponseEntity<List<User>> getUsers() {
-        return ResponseEntity.ok().body(userService.getUsers());
+    @GetMapping("/users")
+    public void getUsers(HttpServletResponse response) throws IOException {
+        Map<String,Object> tokens = new HashMap<>();
+        tokens.put("access_token", userService.getUsers());
+        tokens.put("refresh_token","this is hello refresh_token");
+        response.setContentType(APPLICATION_JSON_VALUE);
+
+        // sent tokens to the body
+        new ObjectMapper().writeValue(response.getOutputStream(),tokens);;
     }
 
     //whenever update data is need to use post method

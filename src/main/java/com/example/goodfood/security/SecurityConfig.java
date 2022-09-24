@@ -38,15 +38,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and();
-        CorsConfiguration corsConfig = new CorsConfiguration();
+//        CorsConfiguration corsConfig = new CorsConfiguration();
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/hello").permitAll();
+        http.authorizeRequests().antMatchers("/home/hello").permitAll().and().httpBasic();
+        http.authorizeRequests().antMatchers(GET,"/api/users").hasAnyAuthority("ROLE_ADMIN").and().httpBasic();
         http.authorizeRequests().antMatchers("/api/login/**","/token/refresh/**").permitAll();
-        http.authorizeRequests().antMatchers(GET,"/api/user/**").hasAnyAuthority("ROLE_USER");
         http.authorizeRequests().antMatchers(POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();      // check roles -> allow all user
         http.addFilter(customAuthenticationFilter);
@@ -57,7 +57,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000"));
-        configuration.setAllowedMethods(Arrays.asList("GET","POST"));
+        configuration.addAllowedHeader("*");
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PUT", "DELETE", "OPTIONS"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
