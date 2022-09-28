@@ -4,8 +4,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.example.goodfood.model.Role;
-import com.example.goodfood.model.User;
+import com.example.goodfood.entity.Role;
+import com.example.goodfood.entity.User;
 import com.example.goodfood.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
