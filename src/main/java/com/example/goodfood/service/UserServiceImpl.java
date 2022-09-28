@@ -1,7 +1,7 @@
 package com.example.goodfood.service;
 
-import com.example.goodfood.model.Role;
-import com.example.goodfood.model.User;
+import com.example.goodfood.entity.Role;
+import com.example.goodfood.entity.User;
 import com.example.goodfood.repo.RoleRepo;
 import com.example.goodfood.repo.UserRepo;
 import lombok.RequiredArgsConstructor;
@@ -72,6 +72,4 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         log.info("Fetching the all user ");
         return userRepo.findAll();
     }
-
-
 }

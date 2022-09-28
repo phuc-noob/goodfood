@@ -1,4 +1,4 @@
-package com.example.goodfood.model;
+package com.example.goodfood.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

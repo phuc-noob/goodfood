@@ -1,4 +1,4 @@
-package com.example.goodfood.security;
+package com.example.goodfood.filler;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -14,7 +14,6 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.websocket.Decoder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;

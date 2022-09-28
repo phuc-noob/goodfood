@@ -1,9 +1,12 @@
-package com.example.goodfood.security;
+package com.example.goodfood.filler;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.example.goodfood.dto.response.Response;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.json.HTTP;
+import org.json.JSONObject;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -11,11 +14,14 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.StreamUtils;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.awt.print.Book;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
@@ -33,10 +39,42 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         this.authenticationManager = authenticationManager;
     }
 
+
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+//        StringBuffer jb = new StringBuffer();
+//        String line = null;
+//        try {
+//            BufferedReader reader = request.getReader();
+//            while ((line = reader.readLine()) != null)
+//                jb.append(line);
+//        } catch (Exception e) { /*report an error*/ }
+//
+//        JSONObject jsonObject =  HTTP.toJSONObject(jb.toString());
+//        log.info(jsonObject.get("Method").toString());
+//        String[] userArray =jsonObject.get("Method").toString().split("&");
+//
+//        log.info(userArray[1].split("=")[1].toString());
+//        ObjectMapper mapper = new ObjectMapper();
+//
+
+        String username ;
+        String password ;
+        try {
+            byte[] inputStreamBytes = StreamUtils.copyToByteArray(request.getInputStream());
+            Map<String, String> jsonRequest = new ObjectMapper().readValue(inputStreamBytes, Map.class);
+
+            username = jsonRequest.get("username");
+            password = jsonRequest.get("password");
+            // other code
+
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        log.info("out try catch {}",username);
+        log.info("out try catch {}",password);
+
         log.info("Username : {}",username); log.info("Password : {}",password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(authenticationToken);
@@ -66,27 +104,11 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         tokens.put("access_token",access_token);
         tokens.put("refresh_token",refresh_token);
 
-        Map<String,Object> apiResponse = new HashMap<>();
-        apiResponse.put("status",response.getStatus());
-        apiResponse.put("message","Login Success");
-        apiResponse.put("data",tokens);
-        response.setContentType(APPLICATION_JSON_VALUE);
-
-        // sent tokens to the body
-        new ObjectMapper().writeValue(response.getOutputStream(),apiResponse);
+        Response.ResponseHttp(response,200,"login success",tokens);
     }
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        Map<String,Object> tokens =new HashMap<>();
-
-        Map<String,Object> apiResponse = new HashMap<>();
-        apiResponse.put("status",response.getStatus());
-        apiResponse.put("message","Login Fail");
-        apiResponse.put("data",tokens);
-        response.setContentType(APPLICATION_JSON_VALUE);
-
-        // sent tokens to the body
-        new ObjectMapper().writeValue(response.getOutputStream(),apiResponse);
+        Response.ResponseHttp(response,401,"username or password not correct",null);
     }
 }

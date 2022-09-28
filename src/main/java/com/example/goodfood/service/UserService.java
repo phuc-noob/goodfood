@@ -1,7 +1,7 @@
 package com.example.goodfood.service;
 
-import com.example.goodfood.model.Role;
-import com.example.goodfood.model.User;
+import com.example.goodfood.entity.Role;
+import com.example.goodfood.entity.User;
 
 import java.util.List;
 
