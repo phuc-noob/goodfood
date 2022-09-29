@@ -4,8 +4,11 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.goodfood.dto.request.UserDto;
+import com.example.goodfood.dto.response.Response;
 import com.example.goodfood.entity.Role;
 import com.example.goodfood.entity.User;
+import com.example.goodfood.filler.jwt.ExtractToken;
 import com.example.goodfood.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,6 +34,12 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserController {
 
     private final UserService userService;
+    @GetMapping("user/detail")
+    public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String username = ExtractToken.getUsername(request);
+        UserDto userDto = new UserDto(userService.getUser(username));
+        Response.ResponseHttp(response,200,"user detail",userDto);
+    }
     @GetMapping("/users")
     public void getUsers(HttpServletResponse response) throws IOException {
         Map<String,Object> tokens = new HashMap<>();

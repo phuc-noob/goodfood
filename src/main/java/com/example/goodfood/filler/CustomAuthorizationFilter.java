@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.example.goodfood.filler.jwt.ExtractToken;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -37,12 +38,8 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             if(authoricationHeader != null && authoricationHeader.startsWith("Bearer "))
             {
                 try{
-                    String token = authoricationHeader.substring("Bearer ".length());
-                    Algorithm algorithm = Algorithm.HMAC256("secret".getBytes());
-                    JWTVerifier verifier = JWT.require(algorithm).build();          //the same algorithm used for authentication
-                    DecodedJWT decodedJWT = verifier.verify(token);
-                    String username = decodedJWT.getSubject();
-                    String roles[] = decodedJWT.getClaim("roles").asArray(String.class);
+                    String username = ExtractToken.getUsername(request);
+                    String roles[] = ExtractToken.getRoles(request);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
                     stream(roles).forEach(role ->{
                         authorities.add(new SimpleGrantedAuthority(role));

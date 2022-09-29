@@ -42,22 +42,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-//        StringBuffer jb = new StringBuffer();
-//        String line = null;
-//        try {
-//            BufferedReader reader = request.getReader();
-//            while ((line = reader.readLine()) != null)
-//                jb.append(line);
-//        } catch (Exception e) { /*report an error*/ }
-//
-//        JSONObject jsonObject =  HTTP.toJSONObject(jb.toString());
-//        log.info(jsonObject.get("Method").toString());
-//        String[] userArray =jsonObject.get("Method").toString().split("&");
-//
-//        log.info(userArray[1].split("=")[1].toString());
-//        ObjectMapper mapper = new ObjectMapper();
-//
-
         String username ;
         String password ;
         try {
@@ -66,9 +50,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
 
             username = jsonRequest.get("username");
             password = jsonRequest.get("password");
-            // other code
-
-
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
