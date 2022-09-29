@@ -34,7 +34,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 public class UserController {
 
     private final UserService userService;
-    @GetMapping("user/detail")
+    @GetMapping("/auth")
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = ExtractToken.getUsername(request);
         UserDto userDto = new UserDto(userService.getUser(username));
