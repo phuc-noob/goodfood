@@ -27,6 +27,18 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public final PasswordEncoder passwordEncoder;
     @Override
     public User saveUser(User user) {
+<<<<<<< HEAD
+        if(getUser(user.getUsername()) ==null){
+            log.info("Saving new user {} to the database",user.getUsername());
+            // encode password before save user to the database
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepo.save(user);
+        }
+        else{
+            log.info("user alredy exist {}",user.getUsername());
+        }
+        return null;
+=======
         LocalDateTime now = LocalDateTime.now();
         Date d = java.sql.Timestamp.valueOf(now);
         user.setCreateAt(d);
@@ -35,6 +47,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
         // encode password before save user to the database
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepo.save(user);
+>>>>>>> 8b68b41f2e1891c63cbb5246ec03d2c6d3066446
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

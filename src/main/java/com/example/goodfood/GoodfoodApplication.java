@@ -4,6 +4,7 @@ import com.example.goodfood.entity.Role;
 import com.example.goodfood.entity.User;
 import com.example.goodfood.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -51,6 +52,10 @@ public class GoodfoodApplication {
 	PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
+	@Bean
+	public ModelMapper modelMapper() {
+		return new ModelMapper();
+	}
 
 	@Bean
 	CommandLineRunner run (IUserService userService){
@@ -64,9 +69,13 @@ public class GoodfoodApplication {
 
 			//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
 
+<<<<<<< HEAD
+			userService.saveUser(new User(null,"My Hoai Le","admin","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+=======
 			//System.out.println(dtf.format(now));        //  2021/03/22 16:37:15
 
 			userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
+>>>>>>> 8b68b41f2e1891c63cbb5246ec03d2c6d3066446
 //			userService.saveUser(new User(null,"The Hieu","HieuPC","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"Phuc Noob","pucnoob","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"David","david","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
@@ -75,7 +84,7 @@ public class GoodfoodApplication {
 //			userService.saveUser(new User(null,"haland","haland","00000000","0000000000","football@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 			//userService.addRoleToUser("MyHoaiLe","ROLE_ADMIN");
 //			userService.addRoleToUser("HieuPc","ROLE_ADMIN");
-//			userService.addRoleToUser("pucnoob","ROLE_ADMIN");
+//			userService.addRoleToUser("pucnoob","ROLE_SELLER");
 		};
 	}
 
