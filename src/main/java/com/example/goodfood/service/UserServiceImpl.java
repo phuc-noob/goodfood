@@ -14,8 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
@@ -25,6 +27,10 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public final PasswordEncoder passwordEncoder;
     @Override
     public User saveUser(User user) {
+        LocalDateTime now = LocalDateTime.now();
+        Date d = java.sql.Timestamp.valueOf(now);
+        user.setCreateAt(d);
+
         log.info("Saving new user {} to the database",user.getUsername());
         // encode password before save user to the database
         user.setPassword(passwordEncoder.encode(user.getPassword()));

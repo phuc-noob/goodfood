@@ -23,7 +23,7 @@ public class User {
     private String phone;
     private String email;
     private float money;
-    private LocalDateTime createAt;
+    private Date createAt;
     // EAGER : when the user load it will load role too
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
