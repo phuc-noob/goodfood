@@ -1,20 +1,26 @@
 package com.example.goodfood.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.example.goodfood.dto.request.CategoryDto;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
+@Getter
+@Setter
 public class Category {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private int cate_id;
-    private String cate_name;
+    @Column(name = "cate_id", nullable = false)
+    private int cateId;
+    @Column(name = "cate_name", nullable = true)
+    private String cateName;
+
+    public Category(CategoryDto categoryDto)
+    {
+        this.cateId = categoryDto.getCateId();
+        this.cateName = categoryDto.getCateName();
+    }
 }

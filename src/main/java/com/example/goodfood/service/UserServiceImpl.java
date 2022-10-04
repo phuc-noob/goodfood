@@ -25,10 +25,16 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public final PasswordEncoder passwordEncoder;
     @Override
     public User saveUser(User user) {
-        log.info("Saving new user {} to the database",user.getUsername());
-        // encode password before save user to the database
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
+        if(getUser(user.getUsername()) ==null){
+            log.info("Saving new user {} to the database",user.getUsername());
+            // encode password before save user to the database
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+            return userRepo.save(user);
+        }
+        else{
+            log.info("user alredy exist {}",user.getUsername());
+        }
+        return null;
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
