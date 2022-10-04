@@ -9,11 +9,14 @@ import com.example.goodfood.dto.response.Response;
 import com.example.goodfood.entity.Role;
 import com.example.goodfood.entity.User;
 import com.example.goodfood.filler.jwt.ExtractToken;
-import com.example.goodfood.service.UserService;
+
+import com.example.goodfood.service.UserRegisterServiceImpl;
+import com.example.goodfood.service.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -29,11 +32,21 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+@ComponentScan({"com.example.goodfood.service"})
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
+    private final UserServiceImpl userService;
+    private final UserRegisterServiceImpl userRegisterService;
+    @PostMapping("/register")
+    public void registerUser(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        if(userRegisterService.tryToRegisterUser(request)){
+            Response.ResponseHttp(response,200,"Register Success",null);
+        }else{
+            Response.ResponseHttp(response,401,"Username is existed",null);
+        }
+    }
     @GetMapping("/auth")
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = ExtractToken.getUsername(request);
@@ -64,13 +77,6 @@ public class UserController {
     {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveRole(role));
-    }
-
-    @PostMapping("/role/addtouser")
-    public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form)
-    {
-        userService.addRoleToUser(form.getUsername(),form.getName());
-        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/token/refresh")
@@ -114,28 +120,6 @@ public class UserController {
         }else{
             throw new RuntimeException("Refresh token is missing ");
         }
-    }
-
-}
-@Data
-class RoleToUserForm{
-    private String username;
-    private String name;
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }
 

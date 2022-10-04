@@ -2,18 +2,22 @@ package com.example.goodfood;
 
 import com.example.goodfood.entity.Role;
 import com.example.goodfood.entity.User;
-import com.example.goodfood.service.UserService;
+import com.example.goodfood.service.IUserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -47,21 +51,29 @@ public class GoodfoodApplication {
 	}
 
 	@Bean
-	CommandLineRunner run (UserService userService){
+	CommandLineRunner run (IUserService userService){
 		return args -> {
-			userService.saveRole(new Role(null,"ROLE_USER"));
-			userService.saveRole(new Role(null,"ROLE_SELLER"));
-			userService.saveRole(new Role(null,"ROLE_MANAGER"));
-			userService.saveRole(new Role(null,"ROLE_ADMIN"));
-			userService.saveRole(new Role(null,"ROLE_SUPPER_ADMIN"));
+//			userService.saveRole(new Role(null,"ROLE_USER"));
+//			userService.saveRole(new Role(null,"ROLE_SELLER"));
+//			userService.saveRole(new Role(null,"ROLE_MANAGER"));
+//			userService.saveRole(new Role(null,"ROLE_ADMIN"));
+//			userService.saveRole(new Role(null,"ROLE_SUPPER_ADMIN"));
 
-			userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
-			userService.saveUser(new User(null,"The Hieu","HieuPc","00000000","000000000","hieu@gmail.com",new ArrayList<>()));
-			userService.saveUser(new User(null,"Vinh Phuc","pucnoob","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
-			userService.saveUser(new User(null,"David","David","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
-			userService.saveUser(new User(null,"Ronaldo","Ronaldo","00000000","0000000000","myhoaile@gmail.com",new ArrayList<>()));
 
-			userService.addRoleToUser("pucnoob","ROLE_ADMIN");
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
+			LocalDateTime now = LocalDateTime.now();
+			System.out.println(dtf.format(now));        //  2021/03/22 16:37:15
+
+//			userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+//			userService.saveUser(new User(null,"The Hieu","HieuPC","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+//			userService.saveUser(new User(null,"Phuc Noob","pucnoob","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+//			userService.saveUser(new User(null,"David","david","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+//			userService.saveUser(new User(null,"Ronaldo","cr7","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+//			userService.saveUser(new User(null,"Messi","m10","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+//			userService.saveUser(new User(null,"haland","haland","00000000","0000000000","football@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+			//userService.addRoleToUser("MyHoaiLe","ROLE_ADMIN");
+//			userService.addRoleToUser("HieuPc","ROLE_ADMIN");
+//			userService.addRoleToUser("pucnoob","ROLE_ADMIN");
 		};
 	}
 

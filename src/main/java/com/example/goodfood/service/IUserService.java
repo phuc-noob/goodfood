@@ -5,7 +5,7 @@ import com.example.goodfood.entity.User;
 
 import java.util.List;
 
-public interface UserService {
+public interface IUserService {
     User saveUser(User user);
     Role saveRole(Role role);
     void addRoleToUser(String username,String name);

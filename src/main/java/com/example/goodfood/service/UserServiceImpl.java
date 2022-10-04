@@ -2,8 +2,8 @@ package com.example.goodfood.service;
 
 import com.example.goodfood.entity.Role;
 import com.example.goodfood.entity.User;
-import com.example.goodfood.repo.RoleRepo;
-import com.example.goodfood.repo.UserRepo;
+import com.example.goodfood.repo.IRoleRepo;
+import com.example.goodfood.repo.IUserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -19,9 +19,9 @@ import java.util.Collection;
 import java.util.List;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
-public class UserServiceImpl implements UserService, UserDetailsService {
-    public final UserRepo userRepo;
-    public final RoleRepo roleRepo;
+public class UserServiceImpl implements IUserService, UserDetailsService {
+    public final IUserRepo userRepo;
+    public final IRoleRepo roleRepo;
     public final PasswordEncoder passwordEncoder;
     @Override
     public User saveUser(User user) {

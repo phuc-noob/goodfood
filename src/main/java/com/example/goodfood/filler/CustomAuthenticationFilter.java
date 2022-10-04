@@ -82,8 +82,8 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
                 .sign(algorithm);
 
         Map<String,Object> tokens =new HashMap<>();
-        tokens.put("access_token",access_token);
-        tokens.put("refresh_token",refresh_token);
+        tokens.put("accessToken",access_token);
+        tokens.put("refreshToken",refresh_token);
 
         Response.ResponseHttp(response,200,"login success",tokens);
     }

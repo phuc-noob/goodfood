@@ -41,11 +41,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and();
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
+        customAuthenticationFilter.setFilterProcessesUrl("/api/auth/login");
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/home/hello").permitAll().and().httpBasic();
+        http.authorizeRequests().antMatchers("/api/register").permitAll().and().httpBasic();
+        http.authorizeRequests().antMatchers(GET,"/api/categorys").permitAll().and().httpBasic();
         http.authorizeRequests().antMatchers(GET,"/api/users").hasAnyAuthority("ROLE_ADMIN").and().httpBasic();
         http.authorizeRequests().antMatchers("/api/login/**","/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");

@@ -3,28 +3,28 @@ package com.example.goodfood.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.w3c.dom.Text;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class Product {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-    private String name;
-    private String username;
-    private String password;
-    private String phone;
-    private String email;
-    private float money;
-    private LocalDateTime createAt;
-    // EAGER : when the user load it will load role too
+    private Long product_id;
+    private Long seller_id;
+    private String product_name;
+    private String picture;
+    private String description;
+    private float unit_price;
+    private float discount;
+    private LocalDateTime create_at;
+    private String state;
     @ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+    Collection<Category> categories= new ArrayList<>();
 }
