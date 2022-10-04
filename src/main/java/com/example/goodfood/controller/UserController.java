@@ -14,7 +14,6 @@ import com.example.goodfood.service.UserRegisterServiceImpl;
 import com.example.goodfood.service.UserServiceImpl;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
@@ -50,6 +49,8 @@ public class UserController {
     @GetMapping("/auth")
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = ExtractToken.getUsername(request);
+        System.out.println("hello date-time");
+        System.out.println(userService.getUser(username).getCreateAt());
         UserDto userDto = new UserDto(userService.getUser(username));
         Response.ResponseHttp(response,200,"user detail",userDto);
     }

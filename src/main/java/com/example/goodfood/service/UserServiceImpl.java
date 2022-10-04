@@ -14,8 +14,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Service @RequiredArgsConstructor @Transactional @Slf4j
@@ -25,6 +27,7 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
     public final PasswordEncoder passwordEncoder;
     @Override
     public User saveUser(User user) {
+<<<<<<< HEAD
         if(getUser(user.getUsername()) ==null){
             log.info("Saving new user {} to the database",user.getUsername());
             // encode password before save user to the database
@@ -35,6 +38,16 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             log.info("user alredy exist {}",user.getUsername());
         }
         return null;
+=======
+        LocalDateTime now = LocalDateTime.now();
+        Date d = java.sql.Timestamp.valueOf(now);
+        user.setCreateAt(d);
+
+        log.info("Saving new user {} to the database",user.getUsername());
+        // encode password before save user to the database
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        return userRepo.save(user);
+>>>>>>> 8b68b41f2e1891c63cbb5246ec03d2c6d3066446
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
