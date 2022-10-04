@@ -17,8 +17,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,11 +62,11 @@ public class GoodfoodApplication {
 //			userService.saveRole(new Role(null,"ROLE_SUPPER_ADMIN"));
 
 
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
-			LocalDateTime now = LocalDateTime.now();
-			System.out.println(dtf.format(now));        //  2021/03/22 16:37:15
+			//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
 
-//			userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
+			//System.out.println(dtf.format(now));        //  2021/03/22 16:37:15
+
+			userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 //			userService.saveUser(new User(null,"The Hieu","HieuPC","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"Phuc Noob","pucnoob","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"David","david","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
