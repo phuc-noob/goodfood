@@ -28,4 +28,11 @@ public class CategoryServiceImpl implements ICategoryService{
             return null;
         }
     }
+
+    @Override
+    public CategoryDto updateCategory(CategoryDto categoryDto) {
+        Category category = new Category(categoryDto);
+
+        return null;
+    }
 }
