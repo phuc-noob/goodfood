@@ -6,10 +6,12 @@ import com.example.goodfood.repo.ICategoryRepo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
+import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
-@Service @RequiredArgsConstructor
+@Service @RequiredArgsConstructor @Transactional
 public class CategoryServiceImpl implements ICategoryService{
     private final ICategoryRepo categoryRepo;
     @Autowired
@@ -29,10 +31,25 @@ public class CategoryServiceImpl implements ICategoryService{
         }
     }
 
-    @Override
-    public CategoryDto updateCategory(CategoryDto categoryDto) {
-        Category category = new Category(categoryDto);
 
-        return null;
+    @Override
+    public CategoryDto updateCategory(CategoryDto categoryDto,Long cateId) {
+        Category category = new Category(categoryDto);
+        if(categoryRepo.updateCategoryName(cateId,categoryDto.getCateName())==1){
+            return categoryDto;
+        }else{
+            return null;
+        }
+
+    }
+
+    @Override
+    public boolean deleteCategory(Long id) {
+        try {
+            categoryRepo.deleteById(id);
+            return true;
+        }catch (Exception ex){
+            return false;
+        }
     }
 }

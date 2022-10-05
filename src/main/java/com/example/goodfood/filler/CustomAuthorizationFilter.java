@@ -23,6 +23,7 @@ import java.util.Map;
 
 import static java.util.Arrays.stream;
 import static org.springframework.http.HttpStatus.FORBIDDEN;
+import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 public class CustomAuthorizationFilter extends OncePerRequestFilter {
@@ -38,6 +39,7 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             if(authoricationHeader != null && authoricationHeader.startsWith("Bearer "))
             {
                 try{
+                    System.out.println("Try to authorization " );
                     String username = ExtractToken.getUsername(request);
                     String roles[] = ExtractToken.getRoles(request);
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
@@ -47,11 +49,12 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
                     // password : null value
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,null,authorities);
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+
                     filterChain.doFilter(request,response);
                 }catch (Exception ex){
                     System.out.println("Error logging to : " + ex.toString());
                     response.setHeader("error" ,ex.getMessage().toString());
-                    response.setStatus(FORBIDDEN.value());
+                    response.setStatus(UNAUTHORIZED.value());
                     // response.sendError(FORBIDDEN.value());
 
                     Map<String,String> error = new HashMap<>();
@@ -67,4 +70,5 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             }
         }
     }
+
 }

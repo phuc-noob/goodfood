@@ -38,7 +38,6 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             log.info("user alredy exist {}",user.getUsername());
         }
 
-
         LocalDateTime now = LocalDateTime.now();
         Date d = java.sql.Timestamp.valueOf(now);
         user.setCreateAt(d);

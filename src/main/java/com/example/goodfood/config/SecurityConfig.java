@@ -24,8 +24,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
-import static org.springframework.http.HttpMethod.GET;
-import static org.springframework.http.HttpMethod.POST;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration @EnableWebSecurity @RequiredArgsConstructor @RestController @CrossOrigin(value = "http://localhost:3000")
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -45,12 +44,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.authorizeRequests().antMatchers(GET,"/home/hello").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers("/api/register").permitAll().and().httpBasic();
         http.authorizeRequests().antMatchers(GET,"/api/categorys").permitAll().and().httpBasic();
         http.authorizeRequests().antMatchers(GET,"/api/users").hasAnyAuthority("ROLE_ADMIN").and().httpBasic();
+
         http.authorizeRequests().antMatchers("/api/login/**","/token/refresh/**").permitAll();
         http.authorizeRequests().antMatchers(POST,"/api/user/save/**").hasAnyAuthority("ROLE_ADMIN");
         http.authorizeRequests().antMatchers(POST,"/api/category/save/**").hasAnyAuthority("ROLE_SELLER");
+
+        //http.authorizeRequests().antMatchers(PUT,"api/category/put/**").hasAnyAuthority("ROLE_ADMIN","ROLE_SELLER");
+
+        http.authorizeRequests().antMatchers(DELETE,"/api/category/delete/**").hasAnyAuthority("ROLE_SELLER","ROLE_ADMIN");
         http.authorizeRequests().anyRequest().authenticated();      // check roles -> allow all user
         http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -73,6 +79,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }
-
-
 }

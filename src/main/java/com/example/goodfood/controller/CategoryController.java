@@ -19,10 +19,23 @@ public class CategoryController {
     public void getCategory(HttpServletResponse response) throws IOException {
         Response.ResponseHttp(response,200,"list category",categoryService.getAllCategory());
     }
-    @PutMapping("category/put/{id}")
-    private void updateCategory(@RequestBody CategoryDto categoryDto,@PathVariable int id,HttpServletResponse response) throws IOException {
 
-        Response.ResponseHttp(response,200,"update success",null);
+    @PutMapping("category/put/{id}")
+    private void updateCategory(@RequestBody CategoryDto categoryDto,@PathVariable Long id,HttpServletResponse response) throws IOException {
+        if(categoryService.updateCategory(categoryDto,id)==null){
+            Response.ResponseHttp(response,HttpStatus.BAD_REQUEST.value(), "update fail ,id was wrong",null);
+        }else{
+            Response.ResponseHttp(response,HttpStatus.OK.value(), "update success",categoryDto);
+        }
+
+    }
+    @DeleteMapping("/category/delete/{id}")
+    private void deleteCategory(@PathVariable Long id,HttpServletResponse response) throws IOException {
+        if(categoryService.deleteCategory(id)){
+            Response.ResponseHttp(response,HttpStatus.OK.value(), "delete success",null);
+        }else{
+            Response.ResponseHttp(response,HttpStatus.FORBIDDEN.value(), "delete fail",null);
+        }
     }
     @PostMapping("/category/save")
     private void saveCategory(@RequestBody CategoryDto categoryDto,HttpServletResponse response) throws IOException {
@@ -31,6 +44,5 @@ public class CategoryController {
         }else{
             Response.ResponseHttp(response,200,"save category success",categoryDto);
         }
-
     }
 }
