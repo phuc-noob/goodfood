@@ -19,7 +19,11 @@ public class CategoryController {
     public void getCategory(HttpServletResponse response) throws IOException {
         Response.ResponseHttp(response,200,"list category",categoryService.getAllCategory());
     }
+    @PutMapping("category/put/{id}")
+    private void updateCategory(@RequestBody CategoryDto categoryDto,@PathVariable int id,HttpServletResponse response) throws IOException {
 
+        Response.ResponseHttp(response,200,"update success",null);
+    }
     @PostMapping("/category/save")
     private void saveCategory(@RequestBody CategoryDto categoryDto,HttpServletResponse response) throws IOException {
         if(categoryService.saveCategory(categoryDto)==null){

@@ -8,4 +8,5 @@ import java.util.List;
 public interface ICategoryService {
     List<Category> getAllCategory();
     CategoryDto saveCategory(CategoryDto categoryDto);
+    CategoryDto updateCategory(CategoryDto categoryDto);
 }
