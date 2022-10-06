@@ -32,20 +32,19 @@ public class UserServiceImpl implements IUserService, UserDetailsService {
             log.info("Saving new user {} to the database",user.getUsername());
             // encode password before save user to the database
             user.setPassword(passwordEncoder.encode(user.getPassword()));
+            LocalDateTime now = LocalDateTime.now();
+            Date d = java.sql.Timestamp.valueOf(now);
+            user.setCreateAt(d);
+
+            log.info("Saving new user {} to the database",user.getUsername());
             return userRepo.save(user);
         }
         else{
             log.info("user alredy exist {}",user.getUsername());
+            return null;
         }
 
-        LocalDateTime now = LocalDateTime.now();
-        Date d = java.sql.Timestamp.valueOf(now);
-        user.setCreateAt(d);
 
-        log.info("Saving new user {} to the database",user.getUsername());
-        // encode password before save user to the database
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepo.save(user);
     }
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

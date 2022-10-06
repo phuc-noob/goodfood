@@ -42,12 +42,8 @@ public class GoodfoodApplication {
 		tokens.put("access_token","this is hello access token");
 		tokens.put("refresh_token","this is hello refresh_token");
 		response.setContentType(APPLICATION_JSON_VALUE);
-
-		// sent tokens to the body
 		new ObjectMapper().writeValue(response.getOutputStream(),tokens);
 	}
-
-	// create bean for password encoder
 	@Bean
 	PasswordEncoder passwordEncoder(){
 		return new BCryptPasswordEncoder();
@@ -56,7 +52,6 @@ public class GoodfoodApplication {
 	public ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
-
 	@Bean
 	CommandLineRunner run (IUserService userService){
 		return args -> {
@@ -65,28 +60,15 @@ public class GoodfoodApplication {
 //			userService.saveRole(new Role(null,"ROLE_MANAGER"));
 //			userService.saveRole(new Role(null,"ROLE_ADMIN"));
 //			userService.saveRole(new Role(null,"ROLE_SUPPER_ADMIN"));
-
-
-			//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("uuuu/MM/dd HH:mm:ss");
-
-			//userService.saveUser(new User(null,"My Hoai Le","admin","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-
-			//System.out.println(dtf.format(now));        //  2021/03/22 16:37:15
-
-			//userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
-
+//
+//			userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 //			userService.saveUser(new User(null,"User ","user","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 //			userService.saveUser(new User(null,"Seller ","seller","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 //			userService.saveUser(new User(null,"Admin ","admin","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
-//			userService.saveUser(new User(null,"Seller ","user","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
-//			userService.saveUser(new User(null,"Phuc Noob","pucnoob","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-//			userService.saveUser(new User(null,"David","david","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-//			userService.saveUser(new User(null,"Ronaldo","cr7","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-//			userService.saveUser(new User(null,"Messi","m10","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-//			userService.saveUser(new User(null,"haland","haland","00000000","0000000000","football@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-			userService.addRoleToUser("admin","ROLE_ADMIN");
-			userService.addRoleToUser("user","ROLE_USER");
-			userService.addRoleToUser("seller","ROLE_SELLER");
+//
+//			userService.addRoleToUser("admin","ROLE_ADMIN");
+//			userService.addRoleToUser("user","ROLE_USER");
+//			userService.addRoleToUser("seller","ROLE_SELLER");
 		};
 	}
 

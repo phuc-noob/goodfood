@@ -22,7 +22,6 @@ public class UserDto {
     private Date createAt;
     public UserDto(User user)
     {
-
         this.id = user.getId();
         this.username = user.getUsername();
         this.email = user.getEmail();

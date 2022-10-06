@@ -49,8 +49,6 @@ public class UserController {
     @GetMapping("/auth")
     public void getUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String username = ExtractToken.getUsername(request);
-        System.out.println("hello date-time");
-        System.out.println(userService.getUser(username).getCreateAt());
         UserDto userDto = new UserDto(userService.getUser(username));
         Response.ResponseHttp(response,200,"user detail",userDto);
     }
@@ -60,26 +58,20 @@ public class UserController {
         tokens.put("access_token", userService.getUsers());
         tokens.put("refresh_token","this is hello refresh_token");
         response.setContentType(APPLICATION_JSON_VALUE);
-
-        // sent tokens to the body
-        new ObjectMapper().writeValue(response.getOutputStream(),tokens);;
+        new ObjectMapper().writeValue(response.getOutputStream(),tokens);
     }
-
-    //whenever update data is need to use post method
     @PostMapping("/user/save")
     public ResponseEntity<User> saveUser(@RequestBody User user)
     {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/user/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveUser(user));
     }
-
     @PostMapping("/role/save")
     public ResponseEntity<Role> saveUser(@RequestBody Role role)
     {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/role/save").toUriString());
         return ResponseEntity.created(uri).body(userService.saveRole(role));
     }
-
     @PostMapping("/token/refresh")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authoricationHeader = request.getHeader("AUTHORIZATION");
