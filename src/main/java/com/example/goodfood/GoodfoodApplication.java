@@ -75,15 +75,18 @@ public class GoodfoodApplication {
 
 			//userService.saveUser(new User(null,"My Hoai Le","MyHoaiLe","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 
+//			userService.saveUser(new User(null,"User ","user","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
+//			userService.saveUser(new User(null,"Seller ","seller","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
+//			userService.saveUser(new User(null,"Admin ","admin","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 //			userService.saveUser(new User(null,"Seller ","user","00000000","0000000000","myhoaile@gmail.com",10,null,new ArrayList<>()));
 //			userService.saveUser(new User(null,"Phuc Noob","pucnoob","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"David","david","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"Ronaldo","cr7","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"Messi","m10","00000000","0000000000","myhoaile@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"haland","haland","00000000","0000000000","football@gmail.com",10,LocalDateTime.now(),new ArrayList<>()));
-			//userService.addRoleToUser("MyHoaiLe","ROLE_ADMIN");
-//			userService.addRoleToUser("HieuPc","ROLE_ADMIN");
-			//userService.addRoleToUser("seller","ROLE_SELLER");
+			userService.addRoleToUser("admin","ROLE_ADMIN");
+			userService.addRoleToUser("user","ROLE_USER");
+			userService.addRoleToUser("seller","ROLE_SELLER");
 		};
 	}
 

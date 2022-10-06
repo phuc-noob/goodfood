@@ -17,7 +17,6 @@ import java.util.Collection;
 public class Product {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private Long product_id;
-    private Long seller_id;
     private String product_name;
     private String picture;
     private String description;
@@ -27,4 +26,7 @@ public class Product {
     private String state;
     @ManyToMany(fetch = FetchType.EAGER)
     Collection<Category> categories= new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "seller_id")
+    private User user;
 }
