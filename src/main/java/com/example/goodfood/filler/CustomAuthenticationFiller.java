@@ -26,15 +26,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+public class CustomAuthenticationFiller extends UsernamePasswordAuthenticationFilter {
 
     private final AuthenticationManager authenticationManager;
 
-    public CustomAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public CustomAuthenticationFiller(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
-
-
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         String username ;
@@ -42,16 +40,12 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
         try {
             byte[] inputStreamBytes = StreamUtils.copyToByteArray(request.getInputStream());
             Map<String, String> jsonRequest = new ObjectMapper().readValue(inputStreamBytes, Map.class);
-
             username = jsonRequest.get("username");
             password = jsonRequest.get("password");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        log.info("out try catch {}",username);
-        log.info("out try catch {}",password);
 
-        log.info("Username : {}",username); log.info("Password : {}",password);
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
         return authenticationManager.authenticate(authenticationToken);
     }
@@ -59,7 +53,6 @@ public class CustomAuthenticationFilter extends UsernamePasswordAuthenticationFi
     // send access_token and refresh_token
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        // user of userDetail -> get user was authentication
         User user = (User) authResult.getPrincipal();
 
         // jwt

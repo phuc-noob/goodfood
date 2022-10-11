@@ -1,4 +1,4 @@
-package com.example.goodfood.service;
+package com.example.goodfood.service.inf;
 
 import javax.servlet.http.HttpServletRequest;
 

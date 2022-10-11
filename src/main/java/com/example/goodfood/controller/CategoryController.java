@@ -2,7 +2,7 @@ package com.example.goodfood.controller;
 
 import com.example.goodfood.dto.request.CategoryDto;
 import com.example.goodfood.dto.response.Response;
-import com.example.goodfood.service.ICategoryService;
+import com.example.goodfood.service.inf.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +20,7 @@ public class CategoryController {
         Response.ResponseHttp(response,200,"list category",categoryService.getAllCategory());
     }
 
-    @PutMapping("category/put/{id}")
+    @PutMapping("category/{id}")
     private void updateCategory(@RequestBody CategoryDto categoryDto,@PathVariable Long id,HttpServletResponse response) throws IOException {
         if(categoryService.updateCategory(categoryDto,id)==null){
             Response.ResponseHttp(response,HttpStatus.BAD_REQUEST.value(), "update fail ,id was wrong",null);
@@ -29,7 +29,7 @@ public class CategoryController {
         }
 
     }
-    @DeleteMapping("/category/delete/{id}")
+    @DeleteMapping("/category/{id}")
     private void deleteCategory(@PathVariable Long id,HttpServletResponse response) throws IOException {
         if(categoryService.deleteCategory(id)){
             Response.ResponseHttp(response,HttpStatus.OK.value(), "delete success",null);
@@ -37,7 +37,7 @@ public class CategoryController {
             Response.ResponseHttp(response,HttpStatus.FORBIDDEN.value(), "delete fail",null);
         }
     }
-    @PostMapping("/category/save")
+    @PostMapping("/category")
     private void saveCategory(@RequestBody CategoryDto categoryDto,HttpServletResponse response) throws IOException {
         if(categoryService.saveCategory(categoryDto)==null){
             Response.ResponseHttp(response, HttpStatus.CREATED.value(), "Category is existed",null);

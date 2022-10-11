@@ -1,4 +1,4 @@
-package com.example.goodfood.service;
+package com.example.goodfood.service.inf;
 
 import com.example.goodfood.dto.request.ProductDto;
 
@@ -9,4 +9,5 @@ public interface IProductService {
     List<ProductDto> getAllproduct();
     void updateProduct(Long id,ProductDto productDto);
     boolean deleteProductById(Long id);
+    List<ProductDto> getProduct(int page,int size);
 }

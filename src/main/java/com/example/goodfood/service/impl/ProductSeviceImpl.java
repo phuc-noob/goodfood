@@ -1,9 +1,9 @@
-package com.example.goodfood.service;
+package com.example.goodfood.service.impl;
 
 import com.example.goodfood.dto.request.ProductDto;
 import com.example.goodfood.entity.Product;
-import com.example.goodfood.repo.ICategoryRepo;
 import com.example.goodfood.repo.IProductRepo;
+import com.example.goodfood.service.inf.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class ProductSeviceImpl implements IProductService{
+public class ProductSeviceImpl implements IProductService {
     private final ModelMapper modelMapper;
     private final IProductRepo productRepo;
     @Override
@@ -50,5 +50,13 @@ public class ProductSeviceImpl implements IProductService{
         {
             return false;
         }
+    }
+
+    @Override
+    public List<ProductDto> getProduct(int page, int size) {
+        return productRepo.getProducts(page, size)
+                .stream()
+                .map(product -> modelMapper.map(product, ProductDto.class))
+                .collect(Collectors.toList());
     }
 }

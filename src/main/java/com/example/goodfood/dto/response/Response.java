@@ -1,7 +1,6 @@
 package com.example.goodfood.dto.response;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,9 +16,6 @@ public class Response {
         apiResponse.put("message",message);
         apiResponse.put("data",data);
         response.setContentType(APPLICATION_JSON_VALUE);
-
-        // sent tokens to the body
         new ObjectMapper().writeValue(response.getOutputStream(),apiResponse);
-
     }
 }

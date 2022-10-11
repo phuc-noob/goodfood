@@ -1,4 +1,4 @@
-package com.example.goodfood.service;
+package com.example.goodfood.service.inf;
 
 import com.example.goodfood.entity.Role;
 import com.example.goodfood.entity.User;

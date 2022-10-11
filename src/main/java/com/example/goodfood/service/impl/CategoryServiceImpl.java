@@ -1,18 +1,18 @@
-package com.example.goodfood.service;
+package com.example.goodfood.service.impl;
 
 import com.example.goodfood.dto.request.CategoryDto;
 import com.example.goodfood.entity.Category;
 import com.example.goodfood.repo.ICategoryRepo;
+import com.example.goodfood.service.inf.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
-import java.util.Collections;
 import java.util.List;
 @Service @RequiredArgsConstructor @Transactional
-public class CategoryServiceImpl implements ICategoryService{
+public class CategoryServiceImpl implements ICategoryService {
     private final ICategoryRepo categoryRepo;
     @Autowired
     private ModelMapper modelMapper;

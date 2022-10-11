@@ -2,7 +2,7 @@ package com.example.goodfood.controller;
 
 import com.example.goodfood.dto.request.ProductDto;
 import com.example.goodfood.dto.response.Response;
-import com.example.goodfood.service.IProductService;
+import com.example.goodfood.service.inf.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
     private final IProductService productService;
-    @PostMapping("/product/save")
+    @PostMapping("/product")
     public void saveProduct(@RequestBody ProductDto productDto, HttpServletResponse response) throws IOException {
         ProductDto test = productService.saveProduct(productDto);
         if(test!=null)
@@ -27,19 +27,19 @@ public class ProductController {
             Response.ResponseHttp(response, HttpStatus.FORBIDDEN.value(), "save product fail",null);
         }
     }
-    @GetMapping("/products")
+    @GetMapping("/products/{page}/{size}")
     private void getAllproduct(HttpServletResponse response) throws IOException {
         List<ProductDto> productDtos = new ArrayList<>();
         productDtos = productService.getAllproduct();
         Response.ResponseHttp(response,200,"all product",productDtos);
     }
-    @PutMapping("/product/put/{id}")
+    @PutMapping("/product/{id}")
     private void updateProduct(@RequestBody ProductDto productDto,@PathVariable Long id,HttpServletResponse response)
     {
         productService.updateProduct(id, productDto);
     }
 
-    @DeleteMapping("/product/delete/{id}")
+    @DeleteMapping("/product/{id}")
     private void deleteProduct(@PathVariable Long id,HttpServletResponse response) throws IOException {
         if(productService.deleteProductById(id))
         {
